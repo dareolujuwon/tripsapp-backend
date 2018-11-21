@@ -16,8 +16,10 @@ Endpoints:
 
 * GET     
   - /api/v1/resources/records         ()-> Returns all records available
+  - /api/v1/resources/records/api/v1/resources/records/docxfile   ()-> Downloads the most recent database records into a .docx file
 * POST    
   - /api/v1/resources/records         ({record object})-> Returns status message | (Creates new entry // Denies new entry)
-* PUT     /api/v1/resources/records/{id}    (id)-> Returns status message | (Successful update // Fail)
-* DELETE  /api/v1/resources/records/{}      ({record object})-> Returns status message | (Deletes entry // Denies delete)
-* GET     /api/v1/resources/records/api/v1/resources/records/docxfile   ()-> Downloads the most recent database records into a .docx file
+* PUT     
+  - /api/v1/resources/records/{id}    (id)-> Returns status message | (Successful update // Fail)
+* DELETE  
+  - /api/v1/resources/records/{}      ({record object})-> Returns status message | (Deletes entry // Denies delete)    
