@@ -18,8 +18,8 @@ Endpoints:
   - /api/v1/resources/records
   - /api/v1/resources/records/api/v1/resources/records/docxfile
 * POST    
-  - /api/v1/resources/records
+  - /api/v1/resources/records/{record object}
 * PUT     
   - /api/v1/resources/records/{id}
 * DELETE  
-  - /api/v1/resources/records/{}
+  - /api/v1/resources/records/{record object}
