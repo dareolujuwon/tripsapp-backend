@@ -15,11 +15,11 @@ Features:
 Endpoints:
 
 * GET     
-  - /api/v1/resources/records         ()-> Returns all records available
-  - /api/v1/resources/records/api/v1/resources/records/docxfile   ()-> Downloads the most recent database records into a .docx file
+  - /api/v1/resources/records
+  - /api/v1/resources/records/api/v1/resources/records/docxfile
 * POST    
-  - /api/v1/resources/records         ({record object})-> Returns status message | (Creates new entry // Denies new entry)
+  - /api/v1/resources/records
 * PUT     
-  - /api/v1/resources/records/{id}    (id)-> Returns status message | (Successful update // Fail)
+  - /api/v1/resources/records/{id}
 * DELETE  
-  - /api/v1/resources/records/{}      ({record object})-> Returns status message | (Deletes entry // Denies delete)    
+  - /api/v1/resources/records/{}
