@@ -1,27 +1,16 @@
 from flask import Flask, request, jsonify, make_response, send_file
 import json
 import time
+import os
+import dbconverter
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
-file = '/Users/olujuwondare/PycharmProjects/untitled1/files/input.txt.json'
+# Directory Path
+dirpath = os.getcwd()
 
-
-class InvalidUsage(Exception):
-    status_code = 400
-
-    def __init__(self, message, status_code=None, payload=None):
-        Exception.__init__(self)
-        self.message = message
-        if status_code is not None:
-            self.status_code = status_code
-        self.payload = payload
-
-    def to_dict(self):
-        rv = dict(self.payload or ())
-        rv['message'] = self.message
-        return rv
+file = dirpath + '/files/input.txt.json'
 
 
 @app.route('/', methods=['GET'])
@@ -91,7 +80,7 @@ def delete_entry():
     except OSError as err:
         print(err)
     if content not in data:
-        return jsonify({"data":"No such content to delete"})
+        return jsonify({"data": "No such content to delete"})
     else:
         for a in range(0, len(data)):
             if content == data[a]:
@@ -127,10 +116,13 @@ def update_entry(id):
                 return abort(400)
 
             i[0]['datetime'] = request.json.get('datetime', i[0]['datetime'])
-            i[0]['description'] = request.json.get('description', i[0]['description'])
-            i[0]['elevation'] = request.json.get('elevation', i[0]['elevation'])
+            i[0]['description'] = request.json.get(
+                'description', i[0]['description'])
+            i[0]['elevation'] = request.json.get(
+                'elevation', i[0]['elevation'])
             i[0]['latitude'] = request.json.get('latitude', i[0]['latitude'])
-            i[0]['longitude'] = request.json.get('longitude', i[0]['longitude'])
+            i[0]['longitude'] = request.json.get(
+                'longitude', i[0]['longitude'])
         with open(file, 'w') as outfile:
             json.dump(data, outfile)
         return jsonify({'status': 'success'})
@@ -139,15 +131,30 @@ def update_entry(id):
 
 
 @app.route('/api/v1/resources/records/docxfile')
-def downloadDocxFile ():
+def downloadDocxFile():
     """
         Endpoint for converting and downloading current object to .docx file
         :return: .docx file
     """
-    converter.convert_to_docx(file)
-    time.sleep(5)
-    f = '/Users/olujuwondare/PycharmProjects/untitled1/files/input.txt.docx'
+    dbconverter.convert_to_docx(dirpath+'/files/input.txt.json')
+    f = dirpath+'/files/input.txt.docx'
     return send_file(f, as_attachment=True, attachment_filename='updated_input.txt.docx')
+
+
+class InvalidUsage(Exception):
+    status_code = 400
+
+    def __init__(self, message, status_code=None, payload=None):
+        Exception.__init__(self)
+        self.message = message
+        if status_code is not None:
+            self.status_code = status_code
+        self.payload = payload
+
+    def to_dict(self):
+        rv = dict(self.payload or ())
+        rv['message'] = self.message
+        return rv
 
 
 @app.errorhandler(404)
